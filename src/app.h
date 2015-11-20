@@ -1,4 +1,3 @@
-#pragma once
 #include <vector>
 #include <stdlib.h>
 #include <stdio.h>
@@ -29,6 +28,7 @@ namespace MediaFileSplitter {
 		private:
 			vector <Plugin*> plugins;
 			appOptions options;
+			void message(char* msg);
 
 		public:
 
@@ -37,7 +37,7 @@ namespace MediaFileSplitter {
 			bool registerPlugin(Plugin* plugin);
 			Plugin* getPlugin(char* file, int type);
 			Plugin* getPlugin(char* file);
-			bool doIndex(char* file);
+			bool process(char* file);
 			void scanDir(char* path);
 	};
 

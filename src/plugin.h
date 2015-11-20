@@ -1,4 +1,5 @@
 #pragma once
+
 #include <dlfcn.h>
 #include "index.h"
 
@@ -23,5 +24,5 @@ class Plugin
         virtual bool doFile(char*) = 0;
         virtual bool doIndex(Index*) = 0;
 
-        ~Plugin();
+        virtual ~Plugin();
 };

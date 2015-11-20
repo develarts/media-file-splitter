@@ -64,10 +64,11 @@ bool IndexCue::getFile(char* output)
 {
     char* c = (char*)malloc(2 * sizeof(char));
     char* buffer = (char*)malloc(128 * sizeof(char));
-    memset(buffer, (int)'\0', sizeof(buffer));
+    //memset(buffer, (int)'\0', sizeof(buffer));
+
     bool isField = false;
     char* value;
-    int pos = 0;
+    unsigned int pos = 0;
 
     fseek(this->file, 0, SEEK_SET);
 
@@ -97,7 +98,7 @@ bool IndexCue::getFile(char* output)
 
         if (strstr(buffer, "FILE") != false) {
 
-            memset(output, '\0', sizeof(output));
+            //memset(output, '\0', sizeof(output));
             strcpy(output, value);
 
             free(value);
@@ -122,7 +123,7 @@ int IndexCue::getNextIndex()
 {
     char* c = (char*)malloc(2 * sizeof(char));
     char* buffer = (char*)malloc(128 * sizeof(char));
-    memset(buffer, (int)'\0', sizeof(buffer));
+    //memset(buffer, (int)'\0', sizeof(buffer));
 
     while (fread(c, 1, 1, this->file)) {
 
@@ -163,14 +164,14 @@ Metadata* IndexCue::getNext()
 
     char* c = (char*)malloc(2 * sizeof(char));
     char* buffer = (char*)malloc(128 * sizeof(char));
-    memset(buffer, (int)'\0', sizeof(buffer));
+    //memset(buffer, (int)'\0', sizeof(buffer));
 
     char* value;
 
     bool isHeader = true;
     bool isField = false;
     int track = 0;
-    int pos = 0;
+    unsigned int pos = 0;
     int index;
 
     fseek(this->file, 0, SEEK_SET);

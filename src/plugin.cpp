@@ -9,6 +9,7 @@
 
 Plugin::Plugin(void* libHandle)
 {
+	this->name = '\0';
     this->libHandle = libHandle;
 }
 

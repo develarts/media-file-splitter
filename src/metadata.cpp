@@ -4,10 +4,15 @@
 #include <iostream>
 
 #include "metadata.h"
+
 typedef unsigned char uchar;
 
 Metadata::Metadata()
 {
+	this->start = 0;
+	this->length = 0;
+	this->year = 0;
+
     this->album = '\0';
     this->artist = '\0';
     this->title = '\0';

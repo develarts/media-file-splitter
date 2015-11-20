@@ -1,4 +1,3 @@
-#pragma once
 #include <stdio.h>
 
 #include "metadata.h"
@@ -12,11 +11,11 @@ class Media
 
 	public:
 		Media(char *location);
-		~Media();
-		virtual Metadata* getMetadata();
-		virtual void setMetadata(Metadata* metadata);
+		virtual ~Media();
+		Metadata* getMetadata();
+		void setMetadata(Metadata* metadata);
 		virtual char* getPeriod(int length, int start) = 0;
-		virtual char* getLocation();
+		char* getLocation();
 
         /*int getLength();
         int getPosition();

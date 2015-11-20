@@ -6,21 +6,21 @@ App::App(appOptions options)
 {
 	this->options = options;
 
-    char pluginPath[PATH_MAX] = {0};
-
+    // obtain application path
+	char pluginPath[PATH_MAX] = {0};
     readlink("/proc/self/exe", pluginPath, sizeof(pluginPath));
+
+    // plugins directory is app relative
     strcpy(strrchr(pluginPath, '/') + sizeof(char), "plugin/");
 
+	// scan plugins directory
     struct dirent **filelist = {0};
-    int fCount = -1;
-
-    fCount = scandir(pluginPath, &filelist, 0, alphasort);
-
+    int fCount = scandir(pluginPath, &filelist, 0, alphasort);
     char filePath[PATH_MAX] = {0};
-    int i = 0;
 
-    for (i = 0; i < fCount; i++) {
+    for (int i = 0; i < fCount; i++) {
 
+    	// search for libraries
         if (!strstr(filelist[i]->d_name, ".so")) {
             continue;
         }
@@ -33,6 +33,14 @@ App::App(appOptions options)
     }
 }
 
+void App::message(char *msg)
+{
+	if (this->options.silent) {
+		return;
+	}
+	printf("%s\n", msg);
+}
+
 void App::start()
 {
     DIR *dir;
@@ -43,7 +51,7 @@ void App::start()
 
     } else if (errno == ENOTDIR) {
 
-    	this->doIndex((char*)this->options.path);
+    	this->process((char*)this->options.path);
 
     } else {
 
@@ -61,13 +69,13 @@ bool App::registerPlugin(Plugin* plugin)
 	this->plugins[this->plugins.size() - 1] = plugin;
 
 	printf("plugin registered: %s (type: %i)\n", plugin->getName(), plugin->getType());
+
+	return true;
 }
 
 Plugin* App::getPlugin(char* file, int type)
 {
-	unsigned int i = 0;
-
-	for (i = 0; i < this->plugins.size(); i++) {
+	for (unsigned int i = 0; i < this->plugins.size(); i++) {
 		if (type != 0 && this->plugins[i]->getType() != type) {
 			continue;
 		}
@@ -84,7 +92,7 @@ Plugin* App::getPlugin(char* file)
 	return this->getPlugin(file, 0);
 }
 
-bool App::doIndex(char* file)
+bool App::process(char* file)
 {
 	Plugin* plugin;
 
@@ -92,7 +100,7 @@ bool App::doIndex(char* file)
 		return false;
 	}
 
-	printf("doIndex: %s\n", file);
+	printf("processing: %s\n", file);
 	plugin->doFile(file);
 
 	return true;
@@ -109,7 +117,7 @@ void App::scanDir(char* path)
 
 	} else if (!(attribut.st_mode & S_IFDIR)) {
 
-		this->doIndex(path);
+		this->process(path);
 		return;
 	}
 
@@ -120,7 +128,7 @@ void App::scanDir(char* path)
 		return;
 	}
 
-	//printf("scanDir: %s\n", path);
+	printf("scanDir: %s\n", path);
 
 	while ((entry = readdir(dir)) != NULL) {
 
@@ -138,5 +146,6 @@ void App::scanDir(char* path)
 		this->scanDir(file);
 		free(file);
 	}
+
 	closedir(dir);
 }

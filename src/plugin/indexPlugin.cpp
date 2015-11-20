@@ -21,7 +21,7 @@ Index* IndexPlugin::openFile(char* file)
 bool IndexPlugin::doFile(char* file)
 {
     Index* index;
-    Plugin* plugin;
+    //Plugin* plugin;
 
     if (!(index = this->openFile(file))) {
         return false;
@@ -52,13 +52,13 @@ bool IndexPlugin::doFile(char* file)
         mediaFilepath = (char*)malloc((strlen(file) + 1) * sizeof(char));
 		strcpy(mediaFilepath, file);
 		//strcpy(strrchr(mediaFilepath, '/') + sizeof(char), mediaFile);
-		strcpy(strrchr(mediaFilepath, '.') + sizeof(char), strrchr(mediaFile, '.') + sizeof(char));
+		//strcpy(strrchr(mediaFilepath, '.') + sizeof(char), strrchr(mediaFile, '.') + sizeof(char));
 	
 		//strcpy(strrchr(mediaFilepath, '/') + sizeof(char), mediaFile);
 		//index->setFile(mediaFilepath);
     }
 
-    if (!(plugin = this->getPlugin(mediaFilepath, PLUGIN_MEDIA))) {
+    /*if (!(plugin = this->getPlugin(mediaFilepath, PLUGIN_MEDIA))) {
 
         printf("no plugin for media: %s\n", mediaFilepath);
 
@@ -71,7 +71,7 @@ bool IndexPlugin::doFile(char* file)
     free(mediaFilepath);
     free(mediaFile);
 
-    plugin->doIndex(index);
+    plugin->doIndex(index);*/
 
     delete index;
 

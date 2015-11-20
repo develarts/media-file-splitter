@@ -1,4 +1,5 @@
 #pragma once
+
 #include <stdio.h>
 
 #include "metadata.h"
@@ -12,9 +13,8 @@ class Index
 
     public:
         Index(char *location);
+        virtual ~Index();
         char* getLocation();
-        virtual Metadata* getNext() {};
+        virtual Metadata* getNext() = 0;
         virtual bool getFile(char* output) = 0;
-        ~Index();
 };
-

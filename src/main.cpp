@@ -14,30 +14,29 @@ void usage(poptContext optCon, int exitcode, char *error)
     }
 }
 
-bool parseOptions(poptContext optCon, appOptions)
+bool parseOptions(poptContext optCon, appOptions* options)
 {
     char c;
-    appOptions options;
 
     while ((c = poptGetNextOpt(optCon)) >= 0) {
         switch (c)
         {
             case 'b':
-                options.backup = poptGetOptArg(optCon);
-                options.clean = true;
+                options->backup = poptGetOptArg(optCon);
+                options->clean = true;
                 break;
             case 'c':
-                options.clean = true;
+                options->clean = true;
                 break;
             case 's':
-                options.silent = true;
+                options->silent = true;
                 break;
         }
     }
 
-    options.path = poptGetArg(optCon);
+    options->path = poptGetArg(optCon);
 
-    if (options.path == NULL) {
+    if (options->path == NULL) {
         usage(optCon, 1, (char*)"Specify index file or directory to scan");
         return false;
     }
@@ -63,7 +62,7 @@ int main(int argc, const char *argv[])
     optCon = poptGetContext(NULL, argc, argv, optionsTable, 0);
     poptSetOtherOptionHelp(optCon, "<file or directory>");
 
-    if (parseOptions(optCon, options)) {
+    if (parseOptions(optCon, &options)) {
 
         try {
 
@@ -72,7 +71,7 @@ int main(int argc, const char *argv[])
 
         } catch (const char* e) {
 
-            printf("error: %s", e);
+            printf("error: %s\n", e);
         }
     }
 
