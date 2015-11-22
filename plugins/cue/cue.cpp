@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include <math.h>
+#include <cstdlib>
 
 #include "cue.h"
 
@@ -20,13 +21,18 @@ char* getName()
 extern "C"
 bool checkFile(char* file)
 {
-	for (unsigned int i = 0; i < strlen(file); i++) {
-		file[i] = tolower(file[i]);
+	char* fileExtension = (char*)malloc(3 * sizeof(char));
+	memset(fileExtension, '\0', 4);
+
+	for (unsigned int i = strlen(file) - 3; i < strlen(file); i++) {
+		fileExtension[3 + i - strlen(file)] = tolower(file[i]);
 	}
 
-    if ((strcmp(&file[strlen(file) - 3], "Cue") != 0)) {
+    if ((strcmp(fileExtension, "cue") != 0)) {
         return false;
     }
+
+    free(fileExtension);
 
     FILE* pFile;
 
@@ -64,7 +70,7 @@ bool IndexCue::getFile(char* output)
 {
     char* c = (char*)malloc(2 * sizeof(char));
     char* buffer = (char*)malloc(128 * sizeof(char));
-    //memset(buffer, (int)'\0', sizeof(buffer));
+    memset(buffer, (int)'\0', sizeof(buffer));
 
     bool isField = false;
     char* value;
@@ -98,7 +104,7 @@ bool IndexCue::getFile(char* output)
 
         if (strstr(buffer, "FILE") != false) {
 
-            //memset(output, '\0', sizeof(output));
+            memset(output, '\0', sizeof(output));
             strcpy(output, value);
 
             free(value);
@@ -123,7 +129,7 @@ int IndexCue::getNextIndex()
 {
     char* c = (char*)malloc(2 * sizeof(char));
     char* buffer = (char*)malloc(128 * sizeof(char));
-    //memset(buffer, (int)'\0', sizeof(buffer));
+    memset(buffer, (int)'\0', sizeof(buffer));
 
     while (fread(c, 1, 1, this->file)) {
 
@@ -164,7 +170,7 @@ Metadata* IndexCue::getNext()
 
     char* c = (char*)malloc(2 * sizeof(char));
     char* buffer = (char*)malloc(128 * sizeof(char));
-    //memset(buffer, (int)'\0', sizeof(buffer));
+    memset(buffer, (int)'\0', sizeof(buffer));
 
     char* value;
 
@@ -285,3 +291,4 @@ Metadata* IndexCue::getNext()
 
     return NULL;
 }
+

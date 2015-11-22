@@ -11,7 +11,6 @@ Index::Index(char* location)
     }
     this->location = (char*)malloc((strlen(location) + 1) * sizeof(char));
     strcpy(this->location, location);
-
     this->cursor = 1;
 }
 

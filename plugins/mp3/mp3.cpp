@@ -78,7 +78,7 @@ char* MediaMp3::getPeriod(int length, int start)
 	return NULL;
 }
 
-/*Metadata* MediaMp3::getMetadata()
+Metadata* MediaMp3::getMetadata()
 {
 	if (!this->metadata) {
 		Metadata* meta = new Metadata();
@@ -88,7 +88,7 @@ char* MediaMp3::getPeriod(int length, int start)
 	}
 
 	return this->metadata;
-}*/
+}
 
 int MediaMp3::findId3v1()
 {

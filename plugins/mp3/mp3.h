@@ -26,11 +26,12 @@ class MediaMp3 : public Media
 		int findId3v1();
 		int findId3v2();
 		bool findMetadata(Metadata* meta);
+		int calculateTagSize(char* in_buffer);
 
 	public:
 		MediaMp3(char* location) : Media(location) {};
-		virtual ~MediaMp3();
+		Metadata* getMetadata();
 		char* getPeriod(int length, int start);
-		int calculateTagSize(char* in_buffer);
 		Mp3Frame* getNextFrame();
+		~MediaMp3();
 };

@@ -24,5 +24,5 @@ class Plugin
         virtual bool doFile(char*) = 0;
         virtual bool doIndex(Index*) = 0;
 
-        virtual ~Plugin();
+        virtual ~Plugin() = 0;
 };

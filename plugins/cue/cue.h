@@ -10,5 +10,5 @@ class IndexCue : public Index
         IndexCue(char* location) : Index(location) {};
         Metadata* getNext();
         bool getFile(char* output);
-        virtual ~IndexCue();
+        ~IndexCue();
 };
