@@ -9,36 +9,39 @@
 #include <errno.h>
 #include <sys/stat.h>
 
+#include "log.h"
 #include "plugin.h"
-
-using namespace std;
 
 namespace MediaFileSplitter {
 
-	struct appOptions
-	{
-		const char *path;
-		const char *backup;
-		bool clean;
-		bool silent;
-	};
+using namespace std;
 
-	class App
-	{
-		private:
-			vector <Plugin*> plugins;
-			appOptions options;
-			void message(char* msg);
+struct appOptions
+{
+	const char* path;
+	const char* backup;
+	bool clean;
+	bool silent;
+};
 
-		public:
+class App
+{
+private:
+	vector<Plugin*> plugins;
+	appOptions options;
 
-			App(appOptions options);
-			void start();
-			bool registerPlugin(Plugin* plugin);
-			Plugin* getPlugin(char* file, int type);
-			Plugin* getPlugin(char* file);
-			bool process(char* file);
-			void scanDir(char* path);
-	};
+public:
+	App(appOptions options);
 
-}
+	void initLogger();
+
+	void start();
+	void scanDir(char* path);
+	bool process(char* file);
+
+	bool registerPlugin(Plugin* plugin);
+	Plugin* getPlugin(char* file, int type);
+	Plugin* getPlugin(char* file);
+};
+
+} // namespace MediaFileSplitter

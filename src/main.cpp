@@ -49,6 +49,9 @@ int main(int argc, const char *argv[])
     poptContext optCon;
     appOptions options;
 
+    options.clean = false;
+    options.silent = false;
+
     struct poptOption optionsTable[] = {
         { "backup", 'b', POPT_ARG_STRING, 0, 'b',
           "path to directory where save backup files" },
